@@ -18,7 +18,7 @@ public class EmployeeBook {
                 id++;
                 Employee newEmployee = new Employee(employeeFirstName, employeeLastName, employeeSurName, employeeDepartment, employeeSalary);
                 this.employees[i] = newEmployee;
-//                this.employees[i].setId(id);
+                this.employees[i].setId(id);
                 size++;
                 return true;
             }
