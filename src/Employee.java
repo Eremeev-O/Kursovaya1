@@ -13,6 +13,7 @@ public class Employee {
         this.surName = surName;
         this.department = department;
         this.salary = salary;
+        this.id = id++;
     }
         public int getId() {
         return this.id;
@@ -40,18 +41,6 @@ public class Employee {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
     }
 
     public void setDepartment(String department) {

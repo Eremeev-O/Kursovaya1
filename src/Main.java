@@ -7,6 +7,7 @@ public class Main {
         System.out.println(employeeBook.addEmployee("Юдин", "Петр", "Семенович", "1", 32000));
         System.out.println(employeeBook.addEmployee("Семенов", "Олег", "Владимирович", "5", 18000));
         System.out.println(employeeBook.addEmployee("Ивановский", "Семен", "Владиславович", "3", 40000));
+        System.out.println("Начальные данные:");
         employeeBook.printAllEmployee();
         employeeBook.removeEmployee(3);
         employeeBook.printAllEmployee();
@@ -17,7 +18,14 @@ public class Main {
         employeeBook.indexationSalary(10);
         System.out.println("Результат индексации зарплаты:");
         employeeBook.printAllEmployee();
-        employeeBook.minSalary("2");
+        employeeBook.minSalary("1");
         employeeBook.maxSalary("3");
+        System.out.println("Сумма затрат по отделу: " + employeeBook.costAmount("1"));
+        System.out.println("Средняя заоплата по отделу: " + employeeBook.averageSalary("1"));
+        employeeBook.departmentEmployees("1");
+        System.out.println("Выводим на печать сотрудников с ЗП меньше указанного числа:");
+        employeeBook.minSalaryOtnos(40000);
+        System.out.println("Выводим на печать сотрудников с ЗП больше указанного числа:");
+        employeeBook.maxSalaryOtnos(40000);
     }
 }
