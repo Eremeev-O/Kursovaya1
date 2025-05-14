@@ -1,15 +1,14 @@
 import java.util.Objects;
 
 public class Employee {
-    private String firstName;
-    private String surName;
-    private String lastName;
-    private String department;
-    private int salary;
-    // id сотрудника делаем уникальным!
+    private final String firstName;
+    private final String surName;
+    private final String lastName;
+    private int department;
+    private float salary;
     private int id;
 
-    public Employee(String surName, String firstName, String lastName, String department, int salary, int id) {
+    public Employee(String surName, String firstName, String lastName, int department, float salary, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.surName = surName;
@@ -33,23 +32,19 @@ public class Employee {
         return this.surName;
     }
 
-    public String getDepartment() {
+    public int getDepartment() {
         return this.department;
     }
 
-    public int getSalary() {
+    public float getSalary() {
         return this.salary;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDepartment(String department) {
+    public void setDepartment(int department) {
         this.department = department;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(float salary) {
         this.salary = salary;
     }
 
@@ -58,7 +53,7 @@ public class Employee {
             return false;
         }
         // Сравниваем все поля, кроме поля с id
-        return this.firstName.equals(((Employee) otherEmployee).firstName) && this.lastName.equals(((Employee) otherEmployee).lastName) && this.surName.equals(((Employee) otherEmployee).surName) && this.department.equals(((Employee) otherEmployee).department) && this.salary == ((Employee) otherEmployee).salary;
+        return this.firstName.equals(((Employee) otherEmployee).firstName) && this.lastName.equals(((Employee) otherEmployee).lastName) && this.surName.equals(((Employee) otherEmployee).surName) && this.department == ((Employee) otherEmployee).department && this.salary == ((Employee) otherEmployee).salary;
     }
 
     public int hashCode() {
@@ -67,6 +62,9 @@ public class Employee {
     }
 
     public String toString() {
-        return "id: " + this.id + " " + this.surName + " " + this.firstName + " " + this.lastName + ", отдел: " + this.department + ", зарплата: " + this.salary;
+        return "id: " + this.id + ", " + this.surName + " " + this.firstName + " " + this.lastName + ", отдел: " + this.department + ", зарплата: " + this.salary;
+    }
+    public String toStringNoDep() {
+        return "id: " + this.id + ", " + this.surName + " " + this.firstName + " " + this.lastName + ", зарплата: " + this.salary;
     }
 }
