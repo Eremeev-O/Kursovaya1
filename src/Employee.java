@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Employee {
     private String firstName;
     private String surName;
@@ -7,13 +9,13 @@ public class Employee {
     // id сотрудника делаем уникальным!
     private int id;
 
-    public Employee(String surName, String firstName, String lastName, String department, int salary) {
+    public Employee(String surName, String firstName, String lastName, String department, int salary, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.surName = surName;
         this.department = department;
         this.salary = salary;
-    //    this.id = 5;
+        this.id = id;
     }
         public int getId() {
         return this.id;
@@ -56,7 +58,7 @@ public class Employee {
             return false;
         }
         // Сравниваем все поля, кроме поля с id
-        return this.firstName.equals(((Employee) otherEmployee).firstName) && this.lastName.equals(((Employee) otherEmployee).lastName) && this.surName == ((Employee) otherEmployee).surName && this.department.equals(((Employee) otherEmployee).department) && this.salary == ((Employee) otherEmployee).salary;
+        return this.firstName.equals(((Employee) otherEmployee).firstName) && this.lastName.equals(((Employee) otherEmployee).lastName) && this.surName.equals(((Employee) otherEmployee).surName) && this.department.equals(((Employee) otherEmployee).department) && this.salary == ((Employee) otherEmployee).salary;
     }
 
     public int hashCode() {
@@ -65,10 +67,6 @@ public class Employee {
     }
 
     public String toString() {
-        if (this.id >= 0) {
-            return "id: " + this.id + " " + this.surName + " " + this.firstName + " " + this.lastName + ", отдел: " + this.department + ", зарплата: " + this.salary;
-        } else {
-            return "Сотрудник не найден";
-        }
+        return "id: " + this.id + " " + this.surName + " " + this.firstName + " " + this.lastName + ", отдел: " + this.department + ", зарплата: " + this.salary;
     }
 }

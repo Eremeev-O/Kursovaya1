@@ -1,32 +1,28 @@
+import java.util.Objects;
+
 public class EmployeeBook {
     private final Employee[] employees;
-    private final Employee employeesNull;
-    private int size = 1;
+//    private int size = 1;
     private int id;
     private int salTemp;
     private int idTemp;
+    private int trigger;
 
     public EmployeeBook() {
-        this.employees = new Employee[5];
-        this.employeesNull = new Employee("отсутствует", "отсутствует", "отсутствует", "отсутствует", 0);
-        this.employeesNull.setId(-1);
-
+        this.employees = new Employee[10];
     }
     public boolean addEmployee(String employeeFirstName, String employeeLastName,String employeeSurName, String employeeDepartment, int employeeSalary) {
         for (int i = 0; i < this.employees.length; i++) {
             if (this.employees[i] == null) {
                 id++;
-                Employee newEmployee = new Employee(employeeFirstName, employeeLastName, employeeSurName, employeeDepartment, employeeSalary);
+                Employee newEmployee = new Employee(employeeFirstName, employeeLastName, employeeSurName, employeeDepartment, employeeSalary, id);
                 this.employees[i] = newEmployee;
-                this.employees[i].setId(id);
-                size++;
                 return true;
             }
         }
         return false;
     }
     public void printAllEmployee() {
-        System.out.println("________________________________________________________________________");
         for (int i = 0; i < this.employees.length; i++) {
             if (this.employees[i] != null) {
                 Employee employee = employees[i];
@@ -34,27 +30,35 @@ public class EmployeeBook {
             }
         }
     }
+    public void printFIO (){
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null) {
+                Employee employee = employees[i];
+                System.out.println(employee.getSurName() + " " + employee.getFirstName() + " " + employee.getLastName());
+            }
+        }
+    }
     public void removeEmployee (int removeId) {
-        System.out.println("________________________________________________________________________");
         for (int i = 0; i < this.employees.length; i++) {
             if (this.employees[i].getId() == removeId) {
                 System.out.println("Сотрудник: " + employees[i].getSurName() + " " + employees[i].getFirstName() + " " + employees[i].getLastName() + " - удален");
                 this.employees[i] = null;
-                size = this.employees.length;
+            //    size = this.employees.length;
                 return;
             }
         }
     }
-    public Employee returnEmployee (int returnID) {
-        System.out.println("________________________________________________________________________");
+    public void returnEmployee (int returnID) {
+        trigger = 0;
         for (int i = 0; i < this.employees.length; i++) {
-            if (this.employees[i].getId() == returnID) {
-                return this.employees[i];
-                //return "Найден сотрудник с id: " + employees[i].getId() + ", " + employees[i].getSurName() + " " + employees[i].getFirstName() + " " + employees[i].getLastName() + ", отдел: " + employees[i].getDepartment() + ", зарплата: " + employees[i].getSalary();
-                //return "Найден сотрудник с id: " + employees[i].getId() + ", " + employees[i].getSurName() + " " + employees[i].getFirstName() + " " + employees[i].getLastName() + ", отдел: " + employees[i].getDepartment() + ", зарплата: " + employees[i].getSalary();
+            if (this.employees[i] != null && this.employees[i].getId() == returnID) {
+                System.out.println("Найден сотрудник с id: " + employees[i].getId() + ", " + employees[i].getSurName() + " " + employees[i].getFirstName() + " " + employees[i].getLastName() + ", отдел: " + employees[i].getDepartment() + ", зарплата: " + employees[i].getSalary());
+                trigger = 1;
             }
         }
-        return employeesNull;
+        if (trigger == 0) {
+            System.out.println("Сотрудник не найден");
+        }
     }
     public void indexationSalary(int div) {
         for (int i = 0; i < this.employees.length; i++) {
@@ -63,35 +67,64 @@ public class EmployeeBook {
             }
         }
     }
-    public void minSalary (String depName) {
-        salTemp = 0;
-        idTemp = 0;
+    public void indexationSalary(int div, String depName) {
         for (int i = 0; i < this.employees.length; i++) {
-            if (salTemp == 0 && this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && this.employees[i].getDepartment().equals(depName)) {
+                this.employees[i].setSalary(employees[i].getSalary() + (this.employees[i].getSalary() * div / 100));
+            }
+        }
+    }
+    public void minSalary () {
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null && i == 0) {
                 salTemp = this.employees[i].getSalary();
                 idTemp = i;
             }
-            if (salTemp > this.employees[i].getSalary() && this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && salTemp > this.employees[i].getSalary()) {
                 salTemp = this.employees[i].getSalary();
                 idTemp = i;
             }
         }
-        if (salTemp != 0 && idTemp >= 0) {
+        System.out.println("Минимальная ЗП у : " + this.employees[idTemp].toString());
+    }
+    public void minSalary (String depName) {
+        idTemp = -1;
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null && i == 0 && this.employees[i].getDepartment().equals(depName)) {
+                salTemp = this.employees[i].getSalary();
+                idTemp = i;
+            }
+            if (this.employees[i] != null && salTemp > this.employees[i].getSalary() && this.employees[i].getDepartment().equals(depName)) {
+                salTemp = this.employees[i].getSalary();
+                idTemp = i;
+            }
+        }
+        if (idTemp >= 0) {
             System.out.println("Минимальная ЗП у : " + this.employees[idTemp].toString());
         } else {
             System.out.println("Нет такого отдела!");
         }
     }
-    public void maxSalary (String depName) {
+    public void maxSalary () {
         salTemp = 0;
-        idTemp = 0;
         for (int i = 0; i < this.employees.length; i++) {
-            if (salTemp < this.employees[i].getSalary() && this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && salTemp < this.employees[i].getSalary()) {
                 salTemp = this.employees[i].getSalary();
                 idTemp = i;
             }
         }
-        if (salTemp != 0 && idTemp >= 0) {
+        System.out.println("Максимальная ЗП у : " + this.employees[idTemp].toString());
+    }
+    public void maxSalary (String depName) {
+        salTemp = 0;
+        idTemp = -1;
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null && salTemp < this.employees[i].getSalary() && this.employees[i].getDepartment().equals(depName)) {
+                salTemp = this.employees[i].getSalary();
+                idTemp = i;
+            }
+        }
+        if (idTemp >= 0) {
             System.out.println("Максимальная ЗП у : " + this.employees[idTemp].toString());
         } else {
             System.out.println("Нет такого отдела!");
@@ -100,17 +133,37 @@ public class EmployeeBook {
     public int costAmount (String depName){
         salTemp = 0;
         for (int i = 0; i < this.employees.length; i++) {
-            if (this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && this.employees[i].getDepartment().equals(depName)) {
                 salTemp += this.employees[i].getSalary();
             }
         }
         return salTemp;
     }
+    public int costAmount (){
+        salTemp = 0;
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null) {
+                salTemp += this.employees[i].getSalary();
+            }
+        }
+        return salTemp;
+    }
+    public int averageSalary (){
+        salTemp = 0;
+        idTemp = 0;
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i] != null) {
+                salTemp += this.employees[i].getSalary();
+                idTemp++;
+            }
+        }
+        return salTemp/idTemp;
+    }
     public int averageSalary (String depName){
         salTemp = 0;
         idTemp = 0;
         for (int i = 0; i < this.employees.length; i++) {
-            if (this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && this.employees[i].getDepartment().equals(depName)) {
                 salTemp += this.employees[i].getSalary();
                 idTemp++;
             }
@@ -120,7 +173,7 @@ public class EmployeeBook {
     public void departmentEmployees (String depName){
         idTemp = 0;
         for (int i = 0; i < this.employees.length; i++) {
-            if (this.employees[i].getDepartment().equals(depName)) {
+            if (this.employees[i] != null && this.employees[i].getDepartment().equals(depName)) {
                 System.out.println("id: " + this.employees[i].getId() + ", " + this.employees[i].getSurName() + " " + this.employees[i].getFirstName() + " " + this.employees[i].getLastName() + ", зарплата: " + this.employees[i].getSalary());
                 idTemp++;
             }
@@ -131,18 +184,16 @@ public class EmployeeBook {
     }
     public void minSalaryOtnos(int summ) {
         for (int i = 0; i < this.employees.length; i++) {
-            if (summ > this.employees[i].getSalary()) {
+            if (this.employees[i] != null && summ > this.employees[i].getSalary()) {
                 System.out.println("id: " + this.employees[i].getId() + ", " + this.employees[i].getSurName() + " " + this.employees[i].getFirstName() + " " + this.employees[i].getLastName() + ", зарплата: " + this.employees[i].getSalary());
             }
         }
     }
     public void maxSalaryOtnos(int summ) {
         for (int i = 0; i < this.employees.length; i++) {
-            if (summ <= this.employees[i].getSalary()) {
+            if (this.employees[i] != null && summ <= this.employees[i].getSalary()) {
                 System.out.println("id: " + this.employees[i].getId() + ", " + this.employees[i].getSurName() + " " + this.employees[i].getFirstName() + " " + this.employees[i].getLastName() + ", зарплата: " + this.employees[i].getSalary());
             }
         }
     }
-
-
 }
